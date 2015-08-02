@@ -9,16 +9,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<!-- topoJson -->
 		<script src="http://d3js.org/topojson.v1.min.js"></script>
+		<!-- tooltipster -->
+		<script src="jquery.tooltipster.min.js"></script>
 		<!-- data -->
 		<script src="seoul.js"></script>
-		<!-- bootstrap -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
 		<!-- custom css-->
 		<link rel="stylesheet" type="text/css" href="seoul.css">
-		<!-- bootstrap css -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		
+		<!-- tooltipster -->
+		<link rel="stylesheet" type="text/css" href="tooltipster.css">
+
+
 	</head>
 
 	<body>
@@ -46,24 +48,23 @@
 
 
   	var features = topojson.feature(ko, ko.objects.seoul_municipalities_geo).features; //각 feautre 생성
- 
+
  	map.selectAll("path")	//path 그리는듯.
       	.data(features) 	//features 갯수 만큼 
     	.enter().append("path")	//path 만들고
-      	.attr("class", function(d) {
- 
+      	.attr("class", function(d) { 
       		 return "municipality c" + d.properties.code 
       	})
-      	.attr("d", path);
+      	.attr("d", path)
+      	.attr('title',function(d){return d.properties.name});
+      	
 
- 
  
  	//텍스트 달아주기
   	map.selectAll("text")
       	.data(features)
     	.enter().append("text")
       	.attr("transform", function(d) {
-
       	 return "translate(" + path.centroid(d) + ")"; 
       	})
       	.attr("dy", ".35em")
@@ -79,11 +80,12 @@
       		}              // a is not the hovered element, send "a" to the 
       	});
     },function(event){
-    	$(this).css('stroke','#fff').css('z-index',100);
+    	$(this).css('stroke','#fff');
     });
-    $('path').on('click',function(event){
-    	console.log($(this).css('fill',''));    	
-    });
+    console.log($('path'));
+
+   $('path').tooltipster();   
+  
 
     // stroke: #fff;
 
