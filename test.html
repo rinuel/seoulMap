@@ -10,27 +10,44 @@
 	</head>
 
 	<body>
-dfgdfg
+
 	<script type="text/javascript">
-	var width = 960,
-		height = 1160;
+	var width = 800,
+		height = 600;
+
 	var svg = d3.select('body').append('svg')
 				.attr('width',width)
 				.attr('height',height);
 
 
-	console.log(ko);
+	var map = svg.append('g').attr('id','map'),
+		places = svg.append('g').attr('id','places');
 
-	var projection = d3.geo.albersUsa().scale(1000).translate([width / 2,height /2]);
 
+	var projection = d3.geo.mercator()
+    .center([126.9895, 37.5651])
+    .scale(100000)
+    .translate([width/2, height/2]);
+ 
 	var path = d3.geo.path().projection(projection);
+ 
 
-	svg.append('path')
-		.datum(topojson.feature(ko,ko.objects.state))
-		.attr('class','states')
-		.attr('d',path);
-
-
+  	var features = topojson.feature(ko, ko.objects.seoul_municipalities_geo).features;
+ 
+ 	map.selectAll("path")
+      	.data(features)
+    	.enter().append("path")
+      	.attr("class", function(d) { console.log(); return "municipality c" + d.properties.code })
+      	.attr("d", path);
+ 
+  	map.selectAll("text")
+      	.data(features)
+    	.enter().append("text")
+      	.attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+      	.attr("dy", ".35em")
+      	.attr("class", "municipality-label")
+     	.text(function(d) { return d.properties.name; })
+     	
 	</script>
 	</body>
 	
