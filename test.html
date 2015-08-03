@@ -77,7 +77,9 @@
      	 svg.selectAll("path").sort(function (a, b) { // select the parent and sort the path's
       		if ('c'+a.properties.code == $(event.target).attr('class').split(' ')[1]){      			
       			return 1;  
-      		}              // a is not the hovered element, send "a" to the 
+      		}else{
+            return -1;
+          }              // a is not the hovered element, send "a" to the 
       	});
     },function(event){
     	$(this).css('stroke','#fff');
