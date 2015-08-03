@@ -1,19 +1,16 @@
 
-# ${1:Project Name}
-TODO: Write a project description
+# seoulMap
+Draw seoul map with D3.js
 ## Installation
-TODO: Describe the installation process
+Chrome
 ## Usage
-TODO: Write usage instructions
+execute test.html
 ## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+1. clone this project : `git clone https://github.com/rinuel/seourlMap.git "{projectName}"`
+2. excute test.html
 ## History
-TODO: Write history
+ver 1.0
 ## Credits
-TODO: Write credits
+rinuel
 ## License
-TODO: Write license
+rinuel
