@@ -1,0 +1,36 @@
+svg circle {
+  fill: orange;
+  opacity: .5;
+  stroke: white;
+}
+svg circle:hover {
+  fill: red;
+  stroke: #333;
+}
+svg text {
+  pointer-events: none;
+}
+/* 영역 css */
+svg .municipality {
+  fill: #efefef;
+  stroke: #fff;
+}
+/* 영역 라벨 css */
+svg .municipality-label {
+  fill: #bbb;
+  font-size: 12px;
+  font-weight: 300;
+  text-anchor: middle;
+}
+/* 맵 텍스트 */
+svg #map text {
+  color: #333;
+  font-size: 10px;
+  text-anchor: middle;
+}
+/* 맵 위치 텍스트 */
+svg #places text {
+  color: #777;
+  font: 10px sans-serif;
+  text-anchor: start;
+}

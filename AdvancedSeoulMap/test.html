@@ -1,0 +1,52 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<!-- d3 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<!-- tooltipster -->
+		<script src="../javascript/jquery.tooltipster.min.js"></script>
+		<!-- data -->
+		<script src="seoul-topoJSon-data.js"></script>
+    <!-- map Module -->
+    <script src="SeoulMapModule.js"></script>
+
+		<!-- custom css-->
+		<link rel="stylesheet" type="text/css" href="seoul.css">
+		<!-- tooltipster -->
+		<link rel="stylesheet" type="text/css" href="../css/tooltipster.css">
+
+
+	</head>
+
+	<body>
+  <div id="id1"></div>
+  <div id="id2"></div>
+
+	<script type="text/javascript">
+  var option = {
+    width : 900,
+    height : 900,
+    topoJson : ko,
+    target : '#id1',
+    mouseover : function(code){console.log('mouseover = '+code)},
+    mouseout : function(code){console.log('mouseout = '+code)},
+    mouseclick : function(code){console.log('mouseclick = '+code)},
+  }
+
+  var map = new seoulMap(option);
+
+  map.drawMap();
+
+
+  
+
+    // stroke: #fff;
+
+	</script>
+	</body>
+	
+</html>

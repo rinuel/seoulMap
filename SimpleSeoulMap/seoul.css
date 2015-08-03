@@ -1,0 +1,32 @@
+svg circle {
+  fill: orange;
+  opacity: .5;
+  stroke: white;
+}
+svg circle:hover {
+  fill: red;
+  stroke: #333;
+}
+svg text {
+  pointer-events: none;
+}
+svg .municipality {
+  fill: #efefef;
+  stroke: #fff;
+}
+svg .municipality-label {
+  fill: #bbb;
+  font-size: 12px;
+  font-weight: 300;
+  text-anchor: middle;
+}
+svg #map text {
+  color: #333;
+  font-size: 10px;
+  text-anchor: middle;
+}
+svg #places text {
+  color: #777;
+  font: 10px sans-serif;
+  text-anchor: start;
+}
