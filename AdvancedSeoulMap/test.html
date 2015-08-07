@@ -7,8 +7,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<!-- tooltipster -->
-		<script src="../javascript/jquery.tooltipster.min.js"></script>
+    <!-- googleMap -->
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
 		<!-- data -->
 		<script src="seoul-topoJSon-data.js"></script>
     <!-- map Module -->
@@ -16,30 +16,49 @@
 
 		<!-- custom css-->
 		<link rel="stylesheet" type="text/css" href="seoul.css">
-		<!-- tooltipster -->
-		<link rel="stylesheet" type="text/css" href="../css/tooltipster.css">
 
 
 	</head>
 
 	<body>
-  <div id="id1"></div>
-  <div id="id2"></div>
+  <div id="wrapper" style="position: relative; width:1000px;height:1000px">
+    <div id="googleMap" style="width:100%;height:100%;"></div>
+    <div id="id1" style="position: absolute;right:0px;bottom:0px;background-color:white;"></div>
+  </div>
 
 	<script type="text/javascript">
+
+  var mapProp = {
+    center:new google.maps.LatLng(37.572812899999995,126.97865420000001),
+    zoom:15,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  
+  var map2 = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+
   var option = {
-    width : 900,
-    height : 900,
-    topoJson : ko,
-    target : '#id1',
-    mouseover : function(code){console.log('mouseover = '+code)},
-    mouseout : function(code){console.log('mouseout = '+code)},
-    mouseclick : function(code){console.log('mouseclick = '+code)},
+    width : 250,                            //minimap width
+    height : 250,                           //minimap height
+    topoJson : ko,                          //minimap topoJosn object
+    scale : 30000,                          //scale
+    target : '#id1',                        //target div id
+    mouseover : function(feature){},        //feature mouseover callback
+    mouseout : function(feature){},         //feature mouseout callback
+    mouseclick : function(feature,c_axis){  //feature mouseclick callback
+      map2.setCenter({lat: c_axis[1], lng: c_axis[0]});
+      //map2.setZoom(12);
+    },
   }
 
   var map = new seoulMap(option);
 
   map.drawMap();
+
+ // function initialize() {
+
+  //}
+  //google.maps.event.addDomListener(window, 'load', initialize);
 
 
   

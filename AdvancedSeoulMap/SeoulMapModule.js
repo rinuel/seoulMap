@@ -10,9 +10,10 @@ var seoulMap = (function(namespace,$,undefined){
 	var defaults = {};
 	
 	defaults.option = {
-		width : 800,
-		height : 800,
+		width : 250,
+		height : 250,
 		target : 'body',
+		scale : 30000,
 		mouseover : function(){},
 		mouseout : function(){},
 		mouseclick : function(){},
@@ -46,15 +47,16 @@ var seoulMap = (function(namespace,$,undefined){
 			places 	= svg.append('g').attr('id','places');
 
 
-		var projection = d3.geo.mercator()      		//메르카터 투영법
+		var projection = d3.geo.mercator()      		//메르케이터 투영법
     		.center([126.9895, 37.5651])	      		//센터 좌표
-    		.scale(100000)					            //scale 
+    		.scale(opt.scale)					            //scale 
     		.translate([opt.width/2, opt.height/2]);    //좌표이동.
  
-		var path = d3.geo.path().projection(projection); //path 만들고path 엘리먼트 사용하기 위함(다격형 그리기)
+		var path = d3.geo.path().projection(projection); //path 만들고path 엘리먼트 사용하기 위함(다격형 그리기) mercator 프로젝션 사용
  
+ 		console.log(d3.geo.path().projection);
 		//각 feautre 생성
-  		var features = topojson.feature(opt.topoJson, opt.topoJson.objects.seoul_municipalities_geo).features; 
+  		var features = topojson.feature(opt.topoJson, opt.topoJson.objects.seoul_municipalities_geo).features;
 
  		map.selectAll("path")	//path 그리는듯.
       		.data(features) 	//features 갯수 만큼 
@@ -83,31 +85,40 @@ var seoulMap = (function(namespace,$,undefined){
   
 
    		//마우스 오버 이벤트
-    	$(opt.target).find('path').on('mouseover',     		
-     		 function(event){
-    			$(this).css('stroke','#f00').css('stroke-width',2);
-     	 		svg.selectAll("path").sort(function (a, b) { // select the parent and sort the path's
-      				if (a.properties.code == $(event.target).attr('id')){      			
-      					return 1;  
-      				}else{
-            			return -1;
-          			}              // a is not the hovered element, send "a" to the 
-      			});
+    	$(opt.target).find('path').on('mouseover',function(event){
+    		$(this).css('stroke','#f00').css('stroke-width',2);
+     	 	svg.selectAll("path").sort(function (a, b) { // select the parent and sort the path's
+      			if (a.properties.code == $(event.target).attr('id')){      			
+      				return 1;  
+      			}else{
+            		return -1;
+          		}              // a is not the hovered element, send "a" to the 
+      		});
+      		if(typeof opt.mouseover === "function"){
       			opt.mouseover($(event.target).attr('id'));
       		}
-      	);
+      	});
 
       	//마우스 아웃시
-      	$(opt.target).find('path').on('mouseout',      			
-     		function(event){
-    			$(this).css('stroke','#fff');
-    			opt.mouseout($(event.target).attr('id'));
-    		}
-    	);
+      	$(opt.target).find('path').on('mouseout',function(event){
+    		$(this).css('stroke','#fff');
+    		if(typeof opt.mouseout === "function"){
+      			opt.mouseout($(event.target).attr('id'));
+      		}
+    	});
 
       	//마우스 클릭시
-    	$(opt.target).find('path').click(function(event){
-    		opt.mouseclick($(event.target).attr('id'));
+    	$(opt.target).find('path').click(function(event){   
+    		var feature = null; 	
+    		$.each(features,function(i,v){
+    			if(v.properties.code === $(event.target).attr('id'))
+    				feature = v;
+    		});	
+    		if(typeof opt.mouseclick === "function"){
+
+    			//param(feature,featureCentorias)
+    			opt.mouseclick(feature,projection.invert(path.centroid(feature)));
+      		}
     	});
 
     }; //end drawMap
